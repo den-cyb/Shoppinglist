@@ -46,4 +46,46 @@ angular.module('ShoppingList.controllers', [])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
+})
+
+.controller('ShoppingListsCtrl', function ($scope, $ionicPopup) {
+  $scope.lists = [
+    {id:1, name: 'Melcom Shopping List'},
+    {id:2, name: 'Makola'},
+    {id:3, name: 'Agboglo'},
+    {id:4, name: 'Kasoa'},
+    {id:5, name: 'Mallam'},
+    {id:6, name: 'Madina'},
+    {id:7, name: 'Ebola'}
+  ];
+
+  // Triggered on a button click, or some other target
+$scope.showPopup = function() {
+  $scope.data = {}
+
+  // An elaborate, custom popup
+  var myPopup = $ionicPopup.show({
+    template: '<input type="text" ng-model="data.name">',
+    title: 'Enter name for list',
+    scope: $scope,
+    buttons: [
+      { text: 'Cancel' },
+      {
+        text: '<b>Save</b>',
+        type: 'button-positive',
+        onTap: function(e) {
+          if (!$scope.data.name) {
+            //don't allow the user to close unless he enters name password
+            e.preventDefault();
+          } else {
+            return $scope.data.name;
+          }
+        }
+      },
+    ]
+  });
+  myPopup.then(function(res) {
+    $scope.lists.push({id:$scope.lists.length, name: res})
+  });
+ };
 });
