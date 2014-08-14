@@ -69,6 +69,16 @@ angular.module('ShoppingList', ['ionic', 'config', 'ShoppingList.controllers'])
       }
     })
 
+    state('app.it', {
+      url: '/shoppinglists/:itemId'
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/items.html',
+          controller: 'ItemCtrl'
+        }
+      }
+    })
+
     .state('app.single', {
       url: '/playlists/:playlistId',
       views: {
@@ -81,4 +91,3 @@ angular.module('ShoppingList', ['ionic', 'config', 'ShoppingList.controllers'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/playlists');
 });
-

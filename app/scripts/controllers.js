@@ -47,6 +47,9 @@ angular.module('ShoppingList.controllers', [])
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
+.controller('ItemCtrl', function($scope, $stateParams) {
+  
+})
 
 .controller('ShoppingListsCtrl', function ($scope, $ionicPopup) {
   $scope.lists = [

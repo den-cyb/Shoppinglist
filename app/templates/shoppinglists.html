@@ -13,7 +13,7 @@
       </label>
     </div>
     <ion-list>
-      <ion-item class="item-icon-right" ng-repeat="list in lists | filter:searchText" href="#/app/lists/{{list.id}}">
+      <ion-item class="item-icon-right" ng-repeat="list in lists | filter:searchText" href="#/app/lists/{{item.id}}">
         {{list.name}}
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
