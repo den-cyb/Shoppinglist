@@ -59,6 +59,16 @@ angular.module('ShoppingList', ['ionic', 'config', 'ShoppingList.controllers'])
       }
     })
 
+    .state('app.shoppinglists',{
+      url: '/shoppinglists',
+      views: {
+        'menuContent':{
+          templateUrl: 'templates/shoppinglists.html',
+          controller: 'ShoppingListsCtrl'
+        }
+      }
+    })
+
     .state('app.single', {
       url: '/playlists/:playlistId',
       views: {
