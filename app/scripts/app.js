@@ -69,8 +69,8 @@ angular.module('ShoppingList', ['ionic', 'config', 'ShoppingList.controllers'])
       }
     })
 
-    .state('app.it', {
-      url: '/shoppinglists/:itemId',
+    .state('app.item', {
+      url: '/lists/:itemId',
       views: {
         'menuContent' :{
           templateUrl: 'templates/items.html',
