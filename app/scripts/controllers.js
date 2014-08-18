@@ -1,7 +1,7 @@
 'use strict';
 angular.module('ShoppingList.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, storage) {
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -47,12 +47,27 @@ angular.module('ShoppingList.controllers', [])
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
-.controller('ItemCtrl', function ($scope, $ionicPopup) {
+.controller('ItemCtrl', function ($scope, $ionicPopup, storage) {
  $scope.items = [
  {days: 2, name:'Koobi'},
  {days: 1, name: 'Bankye'}
  ];
+ // binding it to a $scope.variable (minimal)
+storage.bind($scope,'varName');
+// will constantly be updating $scope.viewType
+// to change the variable both locally in your controller and in localStorage just do
+$scope.viewType = 'ANYTHING';
+// that's it, it will be updated in localStorage
    // Triggered on a button click, or some other target
+   // just storing something in localStorage with cookie backup for unsupported browsers
+storage.set('key','value');
+// getting that value
+storage.get('key');
+
+// clear all localStorage values
+storage.clearAll();
+
+
 $scope.showPopup = function() {
   $scope.data = {}
 
@@ -84,7 +99,7 @@ $scope.showPopup = function() {
 
 })
 
-.controller('ShoppingListsCtrl', function ($scope, $ionicPopup) {
+.controller('ShoppingListsCtrl', function ($scope, $ionicPopup, storage) {
   $scope.lists = [
     {id:1, name: 'Melcom Shopping List'},
     {id:2, name: 'Makola'},
