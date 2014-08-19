@@ -58,13 +58,12 @@ angular.module('ShoppingList.controllers', [])
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {})
   .controller('ItemCtrl', function($scope, $ionicPopup, storage) {
-    $scope.items = [{
-      days: 2,
-      name: 'Koobi'
-    }, {
-      days: 1,
-      name: 'Bankye'
-    }];
+    $scope.items = [];
+    var currentItem = storage.get('items');
+    console.log(currentItem);
+    if (currentItem){
+      $scope.items = currentItem;
+    }
 
     $scope.showPopup = function() {
       $scope.data = {}
@@ -72,7 +71,7 @@ angular.module('ShoppingList.controllers', [])
       // An elaborate, custom popup
       var myPopup = $ionicPopup.show({
         template: '<input type="text" ng-model="data.name">',
-        title: 'Enter name for list',
+        title: 'Enter name for item',
         scope: $scope,
         buttons: [{
           text: 'Cancel'
@@ -94,6 +93,7 @@ angular.module('ShoppingList.controllers', [])
           id: $scope.items.length,
           name: res
         })
+        storage.set ('items', $scope.items);
       });
     };
 
@@ -102,6 +102,7 @@ angular.module('ShoppingList.controllers', [])
 .controller('ShoppingListsCtrl', function($scope, $ionicPopup, storage) {
   $scope.lists = [];
   var currentList = storage.get('list');
+  //console.log(currentList);
   if (currentList) {
     $scope.lists = currentList;  
   };
