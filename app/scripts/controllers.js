@@ -64,6 +64,12 @@ angular.module('ShoppingList.controllers', [])
     if (currentItem){
       $scope.items = currentItem;
     }
+    $scope.remItem =function(item) {
+      if (item){
+        $scope.items.splice(item,1)
+        storage.set ('items', $scope.items);
+      };
+    }
 
     $scope.showPopup = function() {
       $scope.data = {}
