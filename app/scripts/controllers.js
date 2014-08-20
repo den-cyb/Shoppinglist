@@ -64,13 +64,20 @@ angular.module('ShoppingList.controllers', [])
     if (currentItem){
       $scope.items = currentItem;
     }
-    $scope.remItem =function(item) {
-      if (item){
-        $scope.items.splice(item,1)
-        storage.set ('items', $scope.items);
-      };
-    }
 
+    $scope.remItem =function(index) {
+      $scope.items.splice(index,1)
+      storage.set('items', $scope.items);
+
+      // var index = $scope.items.indexOf(item);
+      // if (index){
+      //   $scope.items.splice(index,1)
+      //   storage.set ('items', $scope.items);
+      // };
+    };
+/*$scope.remItem = function(item) { 
+  var index = $scope.items.indexOf(item)
+  $scope.items.splice(index, 1); */
     $scope.showPopup = function() {
       $scope.data = {}
 
