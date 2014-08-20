@@ -70,7 +70,7 @@ angular.module('ShoppingList', ['ionic', 'config', 'ShoppingList.controllers','a
     })
 
     .state('app.item', {
-      url: '/lists/:itemId',
+      url: '/lists/:id',
       views: {
         'menuContent' :{
           templateUrl: 'templates/items.html',

@@ -57,60 +57,60 @@ angular.module('ShoppingList.controllers', [])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {})
-  .controller('ItemCtrl', function($scope, $ionicPopup, storage) {
-    $scope.items = [];
-    var currentItem = storage.get('items');
-    console.log(currentItem);
-    if (currentItem){
-      $scope.items = currentItem;
-    }
 
-    $scope.remItem =function(index) {
-      $scope.items.splice(index,1)
-      storage.set('items', $scope.items);
+.controller('ItemCtrl', function($scope, $ionicPopup, $stateParams, storage) {
+  $scope.items = [];
+  var listId = $stateParams.id;
+  var listItems = storage.get('items');
+  
+  if (listItems){
+    listItems = listItems.filter(function (item) {
+      return item.listId == listId;
+    })
+    $scope.items = listItems;
+  }
 
-      // var index = $scope.items.indexOf(item);
-      // if (index){
-      //   $scope.items.splice(index,1)
-      //   storage.set ('items', $scope.items);
-      // };
-    };
-/*$scope.remItem = function(item) { 
-  var index = $scope.items.indexOf(item)
-  $scope.items.splice(index, 1); */
-    $scope.showPopup = function() {
-      $scope.data = {}
+  $scope.remItem =function(index) {
+    $scope.items.splice(index,1)
+    storage.set('items', $scope.items);
+  };
 
-      // An elaborate, custom popup
-      var myPopup = $ionicPopup.show({
-        template: '<input type="text" ng-model="data.name">',
-        title: 'Enter name for item',
-        scope: $scope,
-        buttons: [{
-          text: 'Cancel'
-        }, {
-          text: '<b>Save</b>',
-          type: 'button-positive',
-          onTap: function(e) {
-            if (!$scope.data.name) {
-              //don't allow the user to close unless he enters name password
-              e.preventDefault();
-            } else {
-              return $scope.data.name;
-            }
+  $scope.showPopup = function() {
+    $scope.data = {}
+
+    // An elaborate, custom popup
+    var myPopup = $ionicPopup.show({
+      template: '<input type="text" ng-model="data.name">',
+      title: 'Enter name for item',
+      scope: $scope,
+      buttons: [{
+        text: 'Cancel'
+      }, {
+        text: '<b>Save</b>',
+        type: 'button-positive',
+        onTap: function(e) {
+          if (!$scope.data.name) {
+            //don't allow the user to close unless he enters name password
+            e.preventDefault();
+          } else {
+            return $scope.data.name;
           }
-        }, ]
-      });
-      myPopup.then(function(res) {
-        $scope.items.push({
-          id: $scope.items.length,
-          name: res
-        })
-        storage.set ('items', $scope.items);
-      });
-    };
+        }
+      }, ]
+    });
+    myPopup.then(function(res) {
+      $scope.items.push({
+        id: $scope.items.length,
+        listId: listId,
+        name: res
+      })
+      storage.set ('items', $scope.items);
+    });
+  };
 
-  })
+  console.log(listId);
+
+})
 
 .controller('ShoppingListsCtrl', function($scope, $ionicPopup, storage) {
   $scope.lists = [];
@@ -119,8 +119,6 @@ angular.module('ShoppingList.controllers', [])
   if (currentList) {
     $scope.lists = currentList;  
   };
-  
-
 
   // Triggered on a button click, or some other target
   $scope.showPopup = function() {
@@ -148,7 +146,7 @@ angular.module('ShoppingList.controllers', [])
     });
     myPopup.then(function(res) {
       $scope.lists.push({
-        id: $scope.lists.length,
+        id: new Date().getTime(),
         name: res
       })
       storage.set('list', $scope.lists);
