@@ -120,6 +120,12 @@ angular.module('ShoppingList.controllers', [])
     $scope.lists = currentList;  
   };
 
+
+  $scope.remList = function(listId) {
+    $scope.lists.splice(listId,1)
+    storage.set('lists', $scope.lists);
+  };
+
   // Triggered on a button click, or some other target
   $scope.showPopup = function() {
     $scope.data = {}
