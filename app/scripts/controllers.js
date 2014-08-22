@@ -66,7 +66,7 @@ angular.module('ShoppingList.controllers', [])
   if (listItems){
     listItems = listItems.filter(function (item) {
       return item.listId == listId;
-    })
+    });
     $scope.items = listItems;
   }
 
@@ -121,9 +121,9 @@ angular.module('ShoppingList.controllers', [])
   };
 
 
-  $scope.remList = function(listId) {
-    $scope.lists.splice(listId,1)
-    storage.set('lists', $scope.lists);
+  $scope.remList = function(index) {
+    $scope.lists.splice(index,1)
+    storage.set ('list', $scope.lists);
   };
 
   // Triggered on a button click, or some other target
