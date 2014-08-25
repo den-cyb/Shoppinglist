@@ -60,8 +60,10 @@ angular.module('ShoppingList.controllers', [])
 
 .controller('ItemCtrl', function($scope, $ionicPopup, $stateParams, storage) {
   $scope.items = [];
+  var cList = storage.get('cList');
+  var theList = "";
   var listId = $stateParams.id;
-  var listItems = storage.get('items');
+  var listItems = storage.get(cList.name+'items');
   
   if (listItems){
     listItems = listItems.filter(function (item) {
@@ -69,13 +71,28 @@ angular.module('ShoppingList.controllers', [])
     });
     $scope.items = listItems;
   }
+ 
+ $scope.updateItems = function(items) {
+  cList = storage.get('cList');
+  storage.set(cList.name+'items', items);  
+   var alertPopup = $ionicPopup.alert({
+     title: 'Update',
+     template: 'Your update has been successfull !'
+   });
+   alertPopup.then(function(res) {
+     console.log('Update Successfull');
+   });
+ };
 
   $scope.remItem =function(index) {
+    cList = storage.get('cList');
     $scope.items.splice(index,1)
-    storage.set('items', $scope.items);
+    storage.set(cList.name+'items', $scope.items);
+    alert("Remove Done");
   };
 
   $scope.showPopup = function() {
+    cList = storage.get('cList');
     $scope.data = {}
 
     // An elaborate, custom popup
@@ -102,9 +119,10 @@ angular.module('ShoppingList.controllers', [])
       $scope.items.push({
         id: $scope.items.length,
         listId: listId,
-        name: res
+        name: res,
+        isChecked: false
       })
-      storage.set ('items', $scope.items);
+      storage.set (cList.name+'items', $scope.items);
     });
   };
 
@@ -120,6 +138,9 @@ angular.module('ShoppingList.controllers', [])
     $scope.lists = currentList;  
   };
 
+  $scope.keepCurrentList = function(list) {
+    storage.set ('cList', list);
+  };
 
   $scope.remList = function(index) {
     $scope.lists.splice(index,1)

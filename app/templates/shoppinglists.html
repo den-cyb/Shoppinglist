@@ -11,14 +11,17 @@
         <i class="icon ion-search placeholder-icon"></i>
         <input type="text" placeholder="Filter by name..." ng-model="searchText">
       </label>
-    </div><ion-toggle ng-model="shouldShowDelete">
-  Delete List
-</ion-toggle>
+    </div>
     <ion-list show-delete="shouldShowDelete">
       <ion-item class="item-icon-right" ng-repeat="list in lists | filter:searchText" 
-          href="#/app/lists/{{list.id}}"><ion-delete-button class="ion-minus-circled" ng-click="remList($index)"></ion-delete-button>
-        {{list.name}}        
+          href="#/app/lists/{{list.id}}" ng-click="keepCurrentList(list)"><ion-delete-button class="ion-minus-circled" ng-click="remList($index)"></ion-delete-button>
+        {{list.name}}   <i class="icon ion-chevron-right icon-accessory"></i>     
       </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>
+ <div id="footer"class="bar bar-footer">
+     <ion-toggle class="bar bar-header bar-assertive" ng-model="shouldShowDelete">
+  Delete List
+</ion-toggle>
+</div>
