@@ -71,7 +71,7 @@ angular.module('ShoppingList.controllers', [])
     });
     $scope.items = listItems;
   }
- 
+ //updates and saves the checkbox value into the items array
  $scope.updateItems = function(items) {
   cList = storage.get('cList');
   storage.set(cList.name+'items', items);  
@@ -83,12 +83,12 @@ angular.module('ShoppingList.controllers', [])
      console.log('Update Successfull');
    });
  };
-
+//removes an item from the item view
   $scope.remItem =function(index) {
     cList = storage.get('cList');
     $scope.items.splice(index,1)
     storage.set(cList.name+'items', $scope.items);
-    alert("Remove Done");
+    console.log("Remove Done");
   };
 
   $scope.showPopup = function() {
@@ -101,13 +101,14 @@ angular.module('ShoppingList.controllers', [])
       title: 'Enter name for item',
       scope: $scope,
       buttons: [{
-        text: 'Cancel'
+        text: 'Cancel',
+
       }, {
         text: '<b>Save</b>',
         type: 'button-positive',
         onTap: function(e) {
           if (!$scope.data.name) {
-            //don't allow the user to close unless he enters name password
+            
             e.preventDefault();
           } else {
             return $scope.data.name;
