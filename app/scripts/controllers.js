@@ -89,7 +89,7 @@ angular.module('ShoppingList.controllers', [])
     cList = storage.get('cList');
     $scope.items.splice(index,1)
     storage.set(cList.name+'items', $scope.items);
-    console.log("Remove Done");
+    
   };
 
   $scope.showPopup = function() {
