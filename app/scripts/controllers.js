@@ -65,6 +65,7 @@ angular.module('ShoppingList.controllers', [])
   var listId = $stateParams.id;
   var listItems = storage.get(cList.name+'items');
   
+  //search for a list in the list view
   if (listItems){
     listItems = listItems.filter(function (item) {
       return item.listId == listId;
@@ -83,7 +84,7 @@ angular.module('ShoppingList.controllers', [])
      console.log('Update Successfull');
    });
  };
-//removes an item from the item view
+  //removes an item from the item view
   $scope.remItem =function(index) {
     cList = storage.get('cList');
     $scope.items.splice(index,1)
@@ -95,15 +96,12 @@ angular.module('ShoppingList.controllers', [])
     cList = storage.get('cList');
     $scope.data = {}
 
-    // An elaborate, custom popup
+    //recieves input from user
     var myPopup = $ionicPopup.show({
       template: '<input type="text" ng-model="data.name">',
       title: 'Enter name for item',
       scope: $scope,
       buttons: [{
-        text: 'Cancel',
-
-      }, {
         text: '<b>Save</b>',
         type: 'button-positive',
         onTap: function(e) {
@@ -114,8 +112,15 @@ angular.module('ShoppingList.controllers', [])
             return $scope.data.name;
           }
         }
-      }, ]
+      },{
+        text: 'Cancel',
+        onTap: function(e) {
+          $scope.items.splice(items.length + 1, 1);
+        }
+
+      }]
     });
+    //storing the input recieved from popup into local storage
     myPopup.then(function(res) {
       $scope.items.push({
         id: $scope.items.length,
@@ -138,11 +143,11 @@ angular.module('ShoppingList.controllers', [])
   if (currentList) {
     $scope.lists = currentList;  
   };
-
+  //stores the current list in memory
   $scope.keepCurrentList = function(list) {
     storage.set ('cList', list);
   };
-
+  //deletes a list
   $scope.remList = function(index) {
     $scope.lists.splice(index,1)
     storage.set ('list', $scope.lists);
@@ -164,7 +169,7 @@ angular.module('ShoppingList.controllers', [])
         type: 'button-positive',
         onTap: function(e) {
           if (!$scope.data.name) {
-            //don't allow the user to close unless he enters name password
+            //don't allow the user to close unless he enters a list name
             e.preventDefault();
           } else {
             return $scope.data.name;
@@ -172,6 +177,7 @@ angular.module('ShoppingList.controllers', [])
         }
       }, ]
     });
+    //format of stored list in local storage
     myPopup.then(function(res) {
       $scope.lists.push({
         id: new Date().getTime(),
